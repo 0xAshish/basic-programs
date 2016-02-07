@@ -11,8 +11,8 @@ MenuItem savefile=new MenuItem("savefile");
 MenuItem openfile=new MenuItem("openfile");
 MenuItem close=new MenuItem("close");
 Menu tools =new Menu("Tools");
-MenuItem compile=new MenuItem("Compile");
-MenuItem run=new MenuItem("Run");
+MenuItem compile1=new MenuItem("compile1");
+MenuItem Run1=new MenuItem("Run1");
 public Notepad(){
 this.setSize(600,350);
 this.setTitle("Basic IDE");
@@ -21,7 +21,6 @@ this.textarea.setFont(new Font("Century Gothic", Font.BOLD, 12));
 		this.getContentPane().setLayout(new BorderLayout()); 
 		this.getContentPane().add(textarea);
 		this.setMenuBar(this.menubar);
-		
 		this.openfile.addActionListener(this); 
 		this.openfile.setShortcut(new MenuShortcut(KeyEvent.VK_O, false));
 		this.file.add(this.openfile);
@@ -31,56 +30,65 @@ this.textarea.setFont(new Font("Century Gothic", Font.BOLD, 12));
 		this.close.setShortcut(new MenuShortcut(KeyEvent.VK_F4, false));
 		this.close.addActionListener(this);
 		this.file.add(this.close);
-		this.compile.setShortcut(new MenuShortcut(KeyEvent.VK_W, false));
-		this.compile.addActionListener(this);
-		this.tools.add(this.compile);
-		this.run.setShortcut(new MenuShortcut(KeyEvent.VK_E, false));
-		this.run.addActionListener(this);
-		this.tools.add(this.run);
+		this.compile1.setShortcut(new MenuShortcut(KeyEvent.VK_W, false));
+		this.compile1.addActionListener(this);
+		this.tools.add(this.compile1);
+		this.Run1.setShortcut(new MenuShortcut(KeyEvent.VK_E, false));
+		this.Run1.addActionListener(this);
+		this.tools.add(this.Run1);
 		this.menubar.add(this.file); 
  		this.menubar.add(this.tools);
 		this.setVisible(true);
 	
 }
 	public void actionPerformed (ActionEvent e) {
-		if (e.getSource() == this.close)
-			this.dispose(); 
-		else if (e.getSource() == this.openfile) {
-			JFileChooser open = new JFileChooser();
-			int option = open.showOpenDialog(this); 
-			if (option == JFileChooser.APPROVE_OPTION) {
-				this.textarea.setText(""); 
-				try {
-					Scanner scan = new Scanner(new FileReader(open.getSelectedFile().getPath()));
-					while (scan.hasNext()) 
-						this.textarea.append(scan.nextLine() + "\n");
-				} catch (Exception ex) { 
-					System.out.println(ex.getMessage());
+	
+		if (e.getSource() == this.compile1) {
+				this.textarea.append("compiling");
+				System.out.println("it compiling bro");
 				}
+		if (e.getSource() == this.Run1) {
+			this.textarea.append("running");
+			System.out.println("it compiling bro");
+			}
+		if (e.getSource() == this.close){
+			this.dispose(); 
+			}
+		if (e.getSource() == this.openfile) {
+				JFileChooser open = new JFileChooser();
+				int option = open.showOpenDialog(this); 
+				if (option == JFileChooser.APPROVE_OPTION) {
+					this.textarea.setText(""); 
+					try {
+						Scanner scan = new Scanner(new FileReader(open.getSelectedFile().getPath()));
+						while (scan.hasNext()) 
+						this.textarea.append(scan.nextLine() + "\n");
+					} catch (Exception ex) { 
+						System.out.println(ex.getMessage());
+					}
 			}
 		}
- 		else if (e.getSource() == this.savefile) {
-			JFileChooser save = new JFileChooser();
-			int option = save.showSaveDialog(this);
-			if (option == JFileChooser.APPROVE_OPTION) {
-				try {
+ 		if (e.getSource() == this.savefile) {
+				JFileChooser save = new JFileChooser();
+				int option = save.showSaveDialog(this);
+				if (option == JFileChooser.APPROVE_OPTION) {
+					try {
 					
 					BufferedWriter out = new BufferedWriter(new FileWriter(save.getSelectedFile().getPath()));
 					out.write(this.textarea.getText()); 
 					out.close();
-				} catch (Exception ex) {
+					} catch (Exception ex) {
 					System.out.println(ex.getMessage());
 				}
 
 
 			
-		}else if (e.getSource() == this.compile) {
-			this.textarea.append("compiling");
-			}
-		else if (e.getSource() == this.run) {
-			this.textarea.append("running");
-			}
 		}
+		
+		
+	}
+	
+	
 	}
 
 
